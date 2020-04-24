@@ -8,7 +8,7 @@
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "nodebb-plugin-composer-thesis-default@6.3.23",
+    "raw": "nodebb-plugin-thesis-composer-default@6.3.23",
     "name": "nodebb-plugin-thesis-composer-default",
     "escapedName": "nodebb-plugin-thesis-composer-default",
     "rawSpec": "6.3.23",
@@ -18,7 +18,6 @@
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/nodebb-plugin-composer-default/-/nodebb-plugin-composer-default-6.3.23.tgz",
   "_shasum": "6ea5f3cde7fecd751d195581a3621eb529d51fe2",
   "_spec": "nodebb-plugin-composer-default@6.3.23",
   "_where": "D:\\ĐẠI HỌC\\NĂM 4\\HK2\\NodeBB\\nodebb\\NodeBB",
@@ -27,7 +26,7 @@
     "email": "sales@nodebb.org"
   },
   "bugs": {
-    "url": "https://github.com/lamcuongdat/nodebb-plugin-thesis-composer-default/issues"
+    "url": "https://github.com/dealbee/nodebb-plugin-thesis-composer-default/issues"
   },
   "bundleDependencies": false,
   "dependencies": {
@@ -36,7 +35,7 @@
   },
   "deprecated": false,
   "description": "Default composer for NodeBB",
-  "homepage": "https://github.com/lamcuongdat/nodebb-plugin-thesis-composer-default#readme",
+  "homepage": "https://github.com/dealbee/nodebb-plugin-thesis-composer-default#readme",
   "keywords": [
     "nodebb",
     "plugin",
@@ -51,7 +50,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lamcuongdat/nodebb-plugin-thesis-composer-default.git"
+    "url": "https://github.com/dealbee/nodebb-plugin-thesis-composer-default"
   },
   "version": "6.3.23"
 }
