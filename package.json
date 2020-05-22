@@ -36,7 +36,7 @@
     "validator": "^11.0.0"
   },
   "deprecated": false,
-  "description": "Default composer for NodeBB",
+  "description": "Default composer for NodeBB thesis 2016",
   "homepage": "https://github.com/dealbee/nodebb-plugin-thesis-composer-default#readme",
   "keywords": [
     "nodebb",
