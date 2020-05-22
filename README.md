@@ -1,7 +1,9 @@
 # Plugin cho composer của NodeBB (Luận văn CNTN 2016 - HCMUS)
 
 Plugin được viết dựa trên source code gốc của [nodebb-plugin-composer-default](https://github.com/NodeBB/nodebb-plugin-composer-default)
+
 Plugin chỉnh sửa giao diện người dùng của composer mặc định của NodeBB
+
 Plugin thêm chức năng thêm các trường dữ liệu tùy chọn vào composer, ngoài ra plugin cũng hỗ trợ hiển thị các thông tin này ở trang người dùng
 
 ## Cài đặt
