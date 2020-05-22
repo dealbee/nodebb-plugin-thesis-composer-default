@@ -25,9 +25,9 @@ plugin.init = function (data, callback) {
 	var controllers = require('./controllers');
 	SocketPlugins.composer = socketMethods;
 
-	data.router.get('/admin/plugins/composer-default', data.middleware.admin.buildHeader, controllers.renderAdminPage);
+	data.router.get('/admin/plugins/thesis-composer-default', data.middleware.admin.buildHeader, controllers.renderAdminPage);
 	data.router.get('/api/admin/plugins/thesis-composer-default', controllers.renderAdminPage);
-	data.router.post('/composer/thesis-optional-data', async function(req, res){
+	data.router.post('/composer/optional-data', async function(req, res){
 		if (!req.loggedIn){
 			return res.status(400).send({message:"No have permisson"})
 		}
