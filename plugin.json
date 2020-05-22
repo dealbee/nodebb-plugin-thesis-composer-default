@@ -3,22 +3,52 @@
 	"url": "https://github.com/lamcuongdat/nodebb-plugin-thesis-composer-default",
 	"library": "library.js",
 	"hooks": [
-		{ "hook": "static:app.load", "method": "init" },
-		{ "hook": "filter:config.get", "method": "appendConfig" },
-		{ "hook": "filter:composer.build", "method": "build" },
-		{ "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
-		{ "hook": "filter:meta.getLinkTags", "method": "addPrefetchTags" }
+		{
+			"hook": "static:app.load",
+			"method": "init"
+		},
+		{
+			"hook": "filter:config.get",
+			"method": "appendConfig"
+		},
+		{
+			"hook": "filter:composer.build",
+			"method": "build"
+		},
+		{
+			"hook": "filter:admin.header.build",
+			"method": "addAdminNavigation"
+		},
+		{
+			"hook": "filter:meta.getLinkTags",
+			"method": "addPrefetchTags"
+		},
+		{
+			"hook": "filter:topic.create",
+			"method": "addMoreAttr"
+		},
+		{
+			"hook": "filter:topic.edit",
+			"method": "addMoreAttr"
+		},
+		{
+			"hook":"filter:composer.push",
+			"method":"onComposerPush"
+		}
 	],
 	"less": [
 		"./static/less/composer.less",
-		"./static/less/thesis-composer.less"
+		"./static/less/thesis-composer.less",
+		"./static/less/optionalDataContainer.less"
 	],
 	"scripts": [
 		"./static/lib/client.js",
-		"./node_modules/screenfull/dist/screenfull.js"
+		"./node_modules/screenfull/dist/screenfull.js",
+		"./static/lib/addAttr.js"
 	],
 	"modules": {
 		"composer.js": "./static/lib/composer.js",
+		"moment.js": "./static/lib/moment.js",
 		"composer/categoryList.js": "./static/lib/composer/categoryList.js",
 		"composer/controls.js": "./static/lib/composer/controls.js",
 		"composer/drafts.js": "./static/lib/composer/drafts.js",

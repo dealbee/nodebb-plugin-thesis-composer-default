@@ -5,6 +5,7 @@
 define('composer', [
 	'taskbar',
 	'translator',
+	'moment',
 	'composer/controls',
 	'composer/uploads',
 	'composer/formatting',
@@ -15,7 +16,7 @@ define('composer', [
 	'composer/resize',
 	'composer/autocomplete',
 	'scrollStop'
-], function(taskbar, translator, controls, uploads, formatting, drafts, tags, categoryList, preview, resize, autocomplete, scrollStop) {
+], function (taskbar, translator, moment, controls, uploads, formatting, drafts, tags, categoryList, preview, resize, autocomplete, scrollStop) {
 	var composer = {
 		active: undefined,
 		posts: {},
@@ -26,14 +27,14 @@ define('composer', [
 	$(window).off('resize', onWindowResize).on('resize', onWindowResize);
 	onWindowResize();
 
-	$(window).on('action:composer.topics.post', function(ev, data) {
+	$(window).on('action:composer.topics.post', function (ev, data) {
 		localStorage.removeItem('category:' + data.data.cid + ':bookmark');
 		localStorage.removeItem('category:' + data.data.cid + ':bookmark:clicked');
 	});
 
-	$(window).on('popstate', function() {
+	$(window).on('popstate', function () {
 		var env = utils.findBootstrapEnvironment();
-		if (composer.active && (env === 'xs' || env ==='sm')) {
+		if (composer.active && (env === 'xs' || env === 'sm')) {
 			if (!composer.posts[composer.active].modified) {
 				composer.discard(composer.active);
 				if (composer.discardConfirm && composer.discardConfirm.length) {
@@ -43,8 +44,8 @@ define('composer', [
 				return;
 			}
 
-			translator.translate('[[modules:composer.discard]]', function(translated) {
-				composer.discardConfirm = bootbox.confirm(translated, function(confirm) {
+			translator.translate('[[modules:composer.discard]]', function (translated) {
+				composer.discardConfirm = bootbox.confirm(translated, function (confirm) {
 					if (confirm) {
 						composer.discard(composer.active);
 					} else {
@@ -58,7 +59,7 @@ define('composer', [
 
 	function removeComposerHistory() {
 		var env = composer.bsEnvironment;
-		if (ajaxify.data.template.compose === true || env === 'xs' || env ==='sm') {
+		if (ajaxify.data.template.compose === true || env === 'xs' || env === 'sm') {
 			history.back();
 		}
 	}
@@ -98,7 +99,7 @@ define('composer', [
 
 	function alreadyOpen(post) {
 		// If a composer for the same cid/tid/pid is already open, return the uuid, else return bool false
-		var	type, id;
+		var type, id;
 
 		if (post.hasOwnProperty('cid')) {
 			type = 'cid';
@@ -111,7 +112,7 @@ define('composer', [
 		id = post[type];
 
 		// Find a match
-		for(var uuid in composer.posts) {
+		for (var uuid in composer.posts) {
 			if (composer.posts[uuid].hasOwnProperty(type) && id === composer.posts[uuid][type]) {
 				return uuid;
 			}
@@ -137,7 +138,7 @@ define('composer', [
 			actionText = '[[topic:composer.editing]]';
 		}
 
-		translator.translate(actionText, function(translatedAction) {
+		translator.translate(actionText, function (translatedAction) {
 			taskbar.push('composer', uuid, {
 				title: translatedAction.replace('%1', '"' + post.title + '"')
 			});
@@ -173,9 +174,9 @@ define('composer', [
 		});
 	}
 
-	composer.findByTid = function(tid) {
+	composer.findByTid = function (tid) {
 		// Iterates through the initialised composers and returns the uuid of the matching composer
-		for(var uuid in composer.posts) {
+		for (var uuid in composer.posts) {
 			if (composer.posts.hasOwnProperty(uuid) && composer.posts[uuid].hasOwnProperty('tid') && parseInt(composer.posts[uuid].tid, 10) === parseInt(tid, 10)) {
 				return uuid;
 			}
@@ -184,18 +185,18 @@ define('composer', [
 		return null;
 	};
 
-	composer.addButton = function(iconClass, onClick, title) {
+	composer.addButton = function (iconClass, onClick, title) {
 		formatting.addButton(iconClass, onClick, title);
 	};
 
-	composer.newTopic = function(data) {
+	composer.newTopic = function (data) {
 		var pushData = {
 			action: 'topics.post',
 			cid: data.cid,
 			title: data.title || '',
 			body: data.body || '',
 			tags: data.tags || [],
-			modified: (data.title.length || data.body.length ) ? true : false,
+			modified: (data.title.length || data.body.length) ? true : false,
 			isMain: true
 		};
 
@@ -207,7 +208,7 @@ define('composer', [
 		push(pushData);
 	};
 
-	composer.addQuote = function(tid, toPid, selectedPid, title, username, text, uuid) {
+	composer.addQuote = function (tid, toPid, selectedPid, title, username, text, uuid) {
 		uuid = uuid || composer.active;
 
 		var escapedTitle = (title || '').replace(/([\\`*_{}\[\]()#+\-.!])/g, '\\$1').replace(/\[/g, '&#91;').replace(/\]/g, '&#93;').replace(/%/g, '&#37;').replace(/,/g, '&#44;');
@@ -245,22 +246,22 @@ define('composer', [
 		}
 	};
 
-	composer.newReply = function(tid, toPid, title, text) {
-		translator.translate(text, config.defaultLang, function(translated) {
+	composer.newReply = function (tid, toPid, title, text) {
+		translator.translate(text, config.defaultLang, function (translated) {
 			push({
 				action: 'posts.reply',
 				tid: tid,
 				toPid: toPid,
 				title: title,
 				body: translated,
-				modified: (title.length || body.length ) ? true : false,
+				modified: (title.length || body.length) ? true : false,
 				isMain: false
 			});
 		});
 	};
 
-	composer.editPost = function(pid) {
-		socket.emit('plugins.composer.push', pid, function(err, threadData) {
+	composer.editPost = function (pid) {
+		socket.emit('plugins.composer.push', pid, function (err, threadData) {
 			if (err) {
 				return app.alertError(err.message);
 			}
@@ -271,7 +272,7 @@ define('composer', [
 		});
 	};
 
-	composer.load = function(post_uuid) {
+	composer.load = function (post_uuid) {
 		var postContainer = $('.composer[data-uuid="' + post_uuid + '"]');
 		if (postContainer.length) {
 			activate(post_uuid);
@@ -282,7 +283,7 @@ define('composer', [
 			if (composer.formatting) {
 				createNewComposer(post_uuid);
 			} else {
-				socket.emit('plugins.composer.getFormattingOptions', function(err, options) {
+				socket.emit('plugins.composer.getFormattingOptions', function (err, options) {
 					composer.formatting = options;
 					createNewComposer(post_uuid);
 				});
@@ -290,7 +291,7 @@ define('composer', [
 		}
 	};
 
-	composer.enhance = function(postContainer, post_uuid, postData) {
+	composer.enhance = function (postContainer, post_uuid, postData) {
 		/*
 			This method enhances a composer container with client-side sugar (preview, etc)
 			Everything in here also applies to the /compose route
@@ -331,11 +332,11 @@ define('composer', [
 
 		autocomplete.init(postContainer, post_uuid);
 
-		postContainer.on('change', 'input, textarea', function() {
+		postContainer.on('change', 'input, textarea', function () {
 			composer.posts[post_uuid].modified = true;
 		});
 
-		submitBtn.on('click', function(e) {
+		submitBtn.on('click', function (e) {
 			e.preventDefault();
 			e.stopPropagation();	// Other click events bring composer back to active state which is undesired on submit
 
@@ -353,7 +354,7 @@ define('composer', [
 			return true;
 		});
 
-		postContainer.find('.composer-discard').on('click', function(e) {
+		postContainer.find('.composer-discard').on('click', function (e) {
 			e.preventDefault();
 
 			if (!composer.posts[post_uuid].modified) {
@@ -362,8 +363,8 @@ define('composer', [
 			}
 
 			var btn = $(this).prop('disabled', true);
-			translator.translate('[[modules:composer.discard]]', function(translated) {
-				bootbox.confirm(translated, function(confirm) {
+			translator.translate('[[modules:composer.discard]]', function (translated) {
+				bootbox.confirm(translated, function (confirm) {
 					if (confirm) {
 						composer.discard(post_uuid);
 						removeComposerHistory();
@@ -378,7 +379,7 @@ define('composer', [
 			e.stopPropagation();
 			composer.minimize(post_uuid);
 		});
-		postContainer.find('.write-container span.toggle-preview').on('click',function(e){
+		postContainer.find('.write-container span.toggle-preview').on('click', function (e) {
 			$('.write-preview-container .preview.well').parent().addClass('hide');
 			$('.write-preview-container .write-container').parent().removeClass('hide');
 			var previewHeight = $('.write-preview-container .write-container').height();
@@ -387,15 +388,15 @@ define('composer', [
 			preview.render(postContainer);
 			$('.write-preview-container .preview.well').parent().height(previewHeight);
 		})
-		bodyEl.on('input propertychange', function() {
+		bodyEl.on('input propertychange', function () {
 			preview.render(postContainer);
 		});
 
-		bodyEl.on('scroll', function() {
+		bodyEl.on('scroll', function () {
 			preview.matchScroll(postContainer);
 		});
 
-		preview.render(postContainer, function() {
+		preview.render(postContainer, function () {
 			preview.matchScroll(postContainer);
 		});
 
@@ -449,7 +450,7 @@ define('composer', [
 			maximumTagLength: config.maximumTagLength,
 			isTopic: isTopic,
 			isEditing: isEditing,
-			showHandleInput:  config.allowGuestHandles && (app.user.uid === 0 || (isEditing && isGuestPost && app.user.isAdmin)),
+			showHandleInput: config.allowGuestHandles && (app.user.uid === 0 || (isEditing && isGuestPost && app.user.isAdmin)),
 			handle: postData ? postData.handle || '' : undefined,
 			formatting: composer.formatting,
 			tagWhitelist: ajaxify.data.tagWhitelist,
@@ -469,7 +470,7 @@ define('composer', [
 			createData: data
 		});
 
-		app.parseAndTranslate('composer', data, function(composerTemplate) {
+		app.parseAndTranslate('composer', data, function (composerTemplate) {
 			if ($('.composer.composer[data-uuid="' + post_uuid + '"]').length) {
 				return;
 			}
@@ -496,7 +497,7 @@ define('composer', [
 
 			activate(post_uuid);
 
-			postContainer.on('click', function() {
+			postContainer.on('click', function () {
 				if (!taskbar.isActive(post_uuid)) {
 					taskbar.updateActive(post_uuid);
 				}
@@ -511,9 +512,9 @@ define('composer', [
 					idx = textareaEl.attr('tabindex');
 
 				submitBtns.removeAttr('tabindex');
-				mobileSubmitBtn.attr('tabindex', parseInt(idx, 10)+1);
+				mobileSubmitBtn.attr('tabindex', parseInt(idx, 10) + 1);
 
-				$('.category-name-container').on('click', function() {
+				$('.category-name-container').on('click', function () {
 					$('.category-selector').toggleClass('open');
 				});
 			}
@@ -554,10 +555,10 @@ define('composer', [
 
 	function handleHelp(postContainer) {
 		var helpBtn = postContainer.find('.help');
-		socket.emit('plugins.composer.renderHelp', function(err, html) {
+		socket.emit('plugins.composer.renderHelp', function (err, html) {
 			if (!err && html && html.length > 0) {
 				helpBtn.removeClass('hidden');
-				helpBtn.on('click', function() {
+				helpBtn.on('click', function () {
 					bootbox.alert(html);
 				});
 			}
@@ -587,7 +588,7 @@ define('composer', [
 	}
 
 	function activate(post_uuid) {
-		if(composer.active && composer.active !== post_uuid) {
+		if (composer.active && composer.active !== post_uuid) {
 			composer.minimize(composer.active);
 		}
 
@@ -595,7 +596,7 @@ define('composer', [
 	}
 
 	function focusElements(postContainer) {
-		setTimeout(function() {
+		setTimeout(function () {
 			var title = postContainer.find('input.title');
 
 			if (title.length) {
@@ -614,6 +615,56 @@ define('composer', [
 		var bodyEl = postContainer.find('textarea');
 		var thumbEl = postContainer.find('input#topic-thumb-url');
 		var onComposeRoute = postData.hasOwnProperty('template') && postData.template.compose === true;
+
+		var sku = $('#sku-input').val();
+		var dealUrl = $('#url-input').val();
+		var brand = $('#brand-input').val();
+		var price = $('#price-input').val();
+		var amount = $('#amount-input').val();
+		var discountMoney = $('#discount-money-input').val();
+		var discountPercentage = $('#discount-percentage-input').val();
+		var coupon = $('#coupon-input').val();
+		var maxDiscount = $('#max-discount-money-input').val();
+		var minOrder = $('#min-order-input').val();
+		var currency = $('#currency-input').val();
+		var expiredDate = $('#expired-date-input').val();
+		var currencies = ["AFN - AFGHANISTAN","ALL - ALBANIA","DZD - ALGERIA","USD - AMERICAN SAMOA","EUR - ANDORRA","AOA - ANGOLA","XCD - ANGUILLA","XCD - ANTIGUA AND BARBUDA","ARS - ARGENTINA","AMD - ARMENIA","AWG - ARUBA","AUD - AUSTRALIA","EUR - AUSTRIA","AZN - AZERBAIJAN","BSD - BAHAMAS (THE)","BHD - BAHRAIN","BDT - BANGLADESH","BBD - BARBADOS","BYN - BELARUS","EUR - BELGIUM","BZD - BELIZE","XOF - BENIN","BMD - BERMUDA","BTN - BHUTAN","INR - BHUTAN","BOB - BOLIVIA (PLURINATIONAL STATE OF)","BOV - BOLIVIA (PLURINATIONAL STATE OF)","USD - BONAIRE, SINT EUSTATIUS AND SABA","BAM - BOSNIA AND HERZEGOVINA","BWP - BOTSWANA","NOK - BOUVET ISLAND","BRL - BRAZIL","USD - BRITISH INDIAN OCEAN TERRITORY (THE)","BND - BRUNEI DARUSSALAM","BGN - BULGARIA","XOF - BURKINA FASO","BIF - BURUNDI","CVE - CABO VERDE","KHR - CAMBODIA","XAF - CAMEROON","CAD - CANADA","KYD - CAYMAN ISLANDS (THE)","XAF - CENTRAL AFRICAN REPUBLIC (THE)","XAF - CHAD","CLF - CHILE","CLP - CHILE","CNY - CHINA","AUD - CHRISTMAS ISLAND","AUD - COCOS (KEELING) ISLANDS (THE)","COP - COLOMBIA","COU - COLOMBIA","KMF - COMOROS (THE)","CDF - CONGO (THE DEMOCRATIC REPUBLIC OF THE)","XAF - CONGO (THE)","NZD - COOK ISLANDS (THE)","CRC - COSTA RICA","HRK - CROATIA","CUC - CUBA","CUP - CUBA","ANG - CURAÇAO","EUR - CYPRUS","CZK - CZECH REPUBLIC (THE)","XOF - CÔTE D'IVOIRE","DKK - DENMARK","DJF - DJIBOUTI","XCD - DOMINICA","DOP - DOMINICAN REPUBLIC (THE)","USD - ECUADOR","EGP - EGYPT","SVC - EL SALVADOR","USD - EL SALVADOR","XAF - EQUATORIAL GUINEA","ERN - ERITREA","EUR - ESTONIA","ETB - ETHIOPIA","EUR - EUROPEAN UNION","FKP - FALKLAND ISLANDS (THE) [MALVINAS]","DKK - FAROE ISLANDS (THE)","FJD - FIJI","EUR - FINLAND","EUR - FRANCE","EUR - FRENCH GUIANA","XPF - FRENCH POLYNESIA","EUR - FRENCH SOUTHERN TERRITORIES (THE)","XAF - GABON","GMD - GAMBIA (THE)","GEL - GEORGIA","EUR - GERMANY","GHS - GHANA","GIP - GIBRALTAR","EUR - GREECE","DKK - GREENLAND","XCD - GRENADA","EUR - GUADELOUPE","USD - GUAM","GTQ - GUATEMALA","GBP - GUERNSEY","GNF - GUINEA","XOF - GUINEA-BISSAU","GYD - GUYANA","HTG - HAITI","USD - HAITI","AUD - HEARD ISLAND AND McDONALD ISLANDS","EUR - HOLY SEE (THE)","HNL - HONDURAS","HKD - HONG KONG","HUF - HUNGARY","ISK - ICELAND","INR - INDIA","IDR - INDONESIA","XDR - INTERNATIONAL MONETARY FUND (IMF)","IRR - IRAN (ISLAMIC REPUBLIC OF)","IQD - IRAQ","EUR - IRELAND","GBP - ISLE OF MAN","ILS - ISRAEL","EUR - ITALY","JMD - JAMAICA","JPY - JAPAN","GBP - JERSEY","JOD - JORDAN","KZT - KAZAKHSTAN","KES - KENYA","AUD - KIRIBATI","KPW - KOREA (THE DEMOCRATIC PEOPLE’S REPUBLIC OF)","KRW - KOREA (THE REPUBLIC OF)","KWD - KUWAIT","KGS - KYRGYZSTAN","LAK - LAO PEOPLE’S DEMOCRATIC REPUBLIC (THE)","EUR - LATVIA","LBP - LEBANON","LSL - LESOTHO","ZAR - LESOTHO","LRD - LIBERIA","LYD - LIBYA","CHF - LIECHTENSTEIN","EUR - LITHUANIA","EUR - LUXEMBOURG","MOP - MACAO","MGA - MADAGASCAR","MWK - MALAWI","MYR - MALAYSIA","MVR - MALDIVES","XOF - MALI","EUR - MALTA","USD - MARSHALL ISLANDS (THE)","EUR - MARTINIQUE","MRU - MAURITANIA","MUR - MAURITIUS","EUR - MAYOTTE","XUA - MEMBER COUNTRIES OF THE AFRICAN DEVELOPMENT BANK GROUP","MXN - MEXICO","MXV - MEXICO","USD - MICRONESIA (FEDERATED STATES OF)","MDL - MOLDOVA (THE REPUBLIC OF)","EUR - MONACO","MNT - MONGOLIA","EUR - MONTENEGRO","XCD - MONTSERRAT","MAD - MOROCCO","MZN - MOZAMBIQUE","MMK - MYANMAR","NAD - NAMIBIA","ZAR - NAMIBIA","AUD - NAURU","NPR - NEPAL","EUR - NETHERLANDS (THE)","XPF - NEW CALEDONIA","NZD - NEW ZEALAND","NIO - NICARAGUA","XOF - NIGER (THE)","NGN - NIGERIA","NZD - NIUE","AUD - NORFOLK ISLAND","USD - NORTHERN MARIANA ISLANDS (THE)","NOK - NORWAY","OMR - OMAN","PKR - PAKISTAN","USD - PALAU","- PALESTINE, STATE OF","PAB - PANAMA","USD - PANAMA","PGK - PAPUA NEW GUINEA","PYG - PARAGUAY","PEN - PERU","PHP - PHILIPPINES (THE)","NZD - PITCAIRN","PLN - POLAND","EUR - PORTUGAL","USD - PUERTO RICO","QAR - QATAR","MKD - REPUBLIC OF NORTH MACEDONIA","RON - ROMANIA","RUB - RUSSIAN FEDERATION (THE)","RWF - RWANDA","EUR - RÉUNION","EUR - SAINT BARTHÉLEMY","SHP - SAINT HELENA, ASCENSION AND TRISTAN DA CUNHA","XCD - SAINT KITTS AND NEVIS","XCD - SAINT LUCIA","EUR - SAINT MARTIN (FRENCH PART)","EUR - SAINT PIERRE AND MIQUELON","XCD - SAINT VINCENT AND THE GRENADINES","WST - SAMOA","EUR - SAN MARINO","STN - SAO TOME AND PRINCIPE","SAR - SAUDI ARABIA","XOF - SENEGAL","RSD - SERBIA","SCR - SEYCHELLES","SLL - SIERRA LEONE","SGD - SINGAPORE","ANG - SINT MAARTEN (DUTCH PART)","XSU - SISTEMA UNITARIO DE COMPENSACION REGIONAL DE PAGOS ","EUR - SLOVAKIA","EUR - SLOVENIA","SBD - SOLOMON ISLANDS","SOS - SOMALIA","ZAR - SOUTH AFRICA","SSP - SOUTH SUDAN","EUR - SPAIN","LKR - SRI LANKA","SDG - SUDAN (THE)","SRD - SURINAME","NOK - SVALBARD AND JAN MAYEN","SZL - SWAZILAND","SEK - SWEDEN","CHE - SWITZERLAND","CHF - SWITZERLAND","CHW - SWITZERLAND","SYP - SYRIAN ARAB REPUBLIC","TWD - TAIWAN (PROVINCE OF CHINA)","TJS - TAJIKISTAN","TZS - TANZANIA, UNITED REPUBLIC OF","THB - THAILAND","USD - TIMOR-LESTE","XOF - TOGO","NZD - TOKELAU","TOP - TONGA","TTD - TRINIDAD AND TOBAGO","TND - TUNISIA","TRY - TURKEY","TMT - TURKMENISTAN","USD - TURKS AND CAICOS ISLANDS (THE)","AUD - TUVALU","UGX - UGANDA","UAH - UKRAINE","AED - UNITED ARAB EMIRATES (THE)","GBP - UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND (THE)","USD - UNITED STATES MINOR OUTLYING ISLANDS (THE)","USD - UNITED STATES OF AMERICA (THE)","USN - UNITED STATES OF AMERICA (THE)","UYI - URUGUAY","UYU - URUGUAY","UZS - UZBEKISTAN","VUV - VANUATU","VEF - VENEZUELA (BOLIVARIAN REPUBLIC OF)","VND - VIET NAM","USD - VIRGIN ISLANDS (BRITISH)","USD - VIRGIN ISLANDS (U.S.)","XPF - WALLIS AND FUTUNA","MAD - WESTERN SAHARA","YER - YEMEN","ZMW - ZAMBIA","ZWL - ZIMBABWE","EUR - ALAND ISLANDS"]
+		if (currency){
+			if(!currencies.find(e=>e==currency))
+			{
+				return composerAlert(post_uuid, 'Invaid currency');
+			}
+		}
+		console.log(expiredDate)
+		console.log(moment(expiredDate, 'DD-MM-YYYY', true).format())
+		if (expiredDate)
+			if (moment(expiredDate, 'DD-MM-YYYY', true).format() === "Invalid date") {
+				return composerAlert(post_uuid, 'Invaid date');
+			}
+		if (price)
+			if (!parseFloat(price)) {
+				return composerAlert(post_uuid, 'The price of product must be a number');
+			}
+		if (amount)
+			if (!parseInt(amount)) {
+				return composerAlert(post_uuid, 'The amount of product must be a number');
+			}
+		if (discountMoney)
+			if (!parseFloat(discountMoney)) {
+				return composerAlert(post_uuid, 'Discount money must be a number');
+			}
+		if (discountPercentage)
+			if (!parseFloat(discountPercentage) || parseFloat(discountPercentage) > 100 || parseFloat(discountPercentage) < 0) {
+				return composerAlert(post_uuid, 'Discount percentage must be a number and less than 100');
+			}
+		if (maxDiscount)
+			if (!parseFloat(maxDiscount)) {
+				return composerAlert(post_uuid, 'Max discount money must be a number');
+			}
+		if (minOrder)
+			if (!parseInt(minOrder)) {
+				return composerAlert(post_uuid, 'Minimum of order must be a number');
+			}
 
 		titleEl.val(titleEl.val().trim());
 		bodyEl.val(utils.rtrim(bodyEl.val()));
@@ -736,7 +787,7 @@ define('composer', [
 		app.toggleNavbar(true);
 	}
 
-	composer.discard = function(post_uuid) {
+	composer.discard = function (post_uuid) {
 		if (composer.posts[post_uuid]) {
 			var postContainer = $('.composer[data-uuid="' + post_uuid + '"]');
 			postContainer.remove();
@@ -757,7 +808,7 @@ define('composer', [
 	// Alias to .discard();
 	composer.close = composer.discard;
 
-	composer.minimize = function(post_uuid) {
+	composer.minimize = function (post_uuid) {
 		var postContainer = $('.composer[data-uuid="' + post_uuid + '"]');
 		postContainer.css('visibility', 'hidden');
 		composer.active = undefined;

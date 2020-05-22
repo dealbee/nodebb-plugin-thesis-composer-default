@@ -12,7 +12,7 @@ var helpers = require.main.require('./src/controllers/helpers');
 var SocketPlugins = require.main.require('./src/socket.io/plugins');
 var socketMethods = require('./websockets');
 var url = require('url');
-
+var db = require.main.require('./src/database');
 var async = module.parent.require('async');
 var nconf = module.parent.require('nconf');
 var validator = require('validator');
@@ -21,18 +21,62 @@ var plugin = module.exports;
 
 plugin.socketMethods = socketMethods;
 
-plugin.init = function(data, callback) {
+plugin.init = function (data, callback) {
 	var controllers = require('./controllers');
 	SocketPlugins.composer = socketMethods;
 
 	data.router.get('/admin/plugins/composer-default', data.middleware.admin.buildHeader, controllers.renderAdminPage);
-	data.router.get('/api/admin/plugins/composer-default', controllers.renderAdminPage);
+	data.router.get('/api/admin/plugins/thesis-composer-default', controllers.renderAdminPage);
+	data.router.post('/composer/thesis-optional-data', async function(req, res){
+		if (!req.loggedIn){
+			return res.status(400).send({message:"No have permisson"})
+		}
+		var topicData = await db.client.collection('objects').find({ _key: "topic:" + req.body.tid }).toArray();
+		topicData[0].currency=topicData[0].currency.split(" ")[0];
+		data.app.render('optionalDataContainer',topicData[0],function(err,html){
+			return res.status(200).send(html);
+		})
+	});
 
 	callback();
 };
-
-plugin.appendConfig = function(config, callback) {
-	meta.settings.get('composer-default', function(err, settings) {
+plugin.addMoreAttr = function (data, callback) {
+	var newData = {
+		...data.topic,
+		...data.data.optionalData
+	}
+	data.topic = newData;
+	callback(null, data);
+};
+plugin.getTopicInfo = async function (tid) {
+	var topicData = await db.client.collection('objects').find({ _key: "topic:" + tid });
+	return topicData;
+}
+plugin.onComposerPush = function (hookData, callback) {
+	// // called when composer is opened to edit a post
+	// posts.getPostField(hookData.pid, 'sku', function (err, customField) {
+	// 	if (err) {
+	// 		return callback(err);
+	// 	}
+	// 	hookData.sku = customField;
+	// 	callback(null, hookData);
+	// });
+	async.waterfall([
+		async function (next) {
+			var tid = await posts.getPostField(hookData.pid, 'tid')
+			var topicData = await db.client.collection('objects').find({ _key: "topic:"+tid}).toArray();
+			topicData=topicData[0];
+			delete topicData._id;
+			delete topicData._key;
+			hookData.optionalData = topicData;
+			next(null, null)
+		}
+	], function (err, res) {
+		callback(null, hookData);
+	});
+};
+plugin.appendConfig = function (config, callback) {
+	meta.settings.get('composer-default', function (err, settings) {
 		if (err) {
 			return callback(null, config);
 		}
@@ -42,17 +86,17 @@ plugin.appendConfig = function(config, callback) {
 	});
 };
 
-plugin.addAdminNavigation = function(header, callback) {
+plugin.addAdminNavigation = function (header, callback) {
 	header.plugins.push({
-		route: '/plugins/composer-default',
+		route: '/plugins/thesis-composer-default',
 		icon: 'fa-edit',
-		name: 'Composer (Default)'
+		name: 'Thesis Composer'
 	});
 
 	callback(null, header);
 };
 
-plugin.addPrefetchTags = function(hookData, callback) {
+plugin.addPrefetchTags = function (hookData, callback) {
 	var prefetch = [
 		'/assets/src/modules/composer.js', '/assets/src/modules/composer/uploads.js', '/assets/src/modules/composer/drafts.js',
 		'/assets/src/modules/composer/tags.js', '/assets/src/modules/composer/categoryList.js', '/assets/src/modules/composer/resize.js',
@@ -62,7 +106,7 @@ plugin.addPrefetchTags = function(hookData, callback) {
 		'/assets/language/' + (meta.config.defaultLang || 'en-GB') + '/tags.json'
 	];
 
-	hookData.links = hookData.links.concat(prefetch.map(function(path) {
+	hookData.links = hookData.links.concat(prefetch.map(function (path) {
 		return {
 			rel: 'prefetch',
 			href: nconf.get('relative_path') + path + '?' + meta.config['cache-buster']
@@ -72,18 +116,18 @@ plugin.addPrefetchTags = function(hookData, callback) {
 	callback(null, hookData);
 };
 
-plugin.getFormattingOptions = function(callback) {
+plugin.getFormattingOptions = function (callback) {
 	plugins.fireHook('filter:composer.formatting', {
 		options: [
 			{ name: 'tags', className: 'fa fa-tags', mobile: true },
 			{ name: 'zen', className: 'fa fa-arrows-alt', title: '[[modules:composer.zen_mode]]', mobile: false }
 		]
-	}, function(err, payload) {
+	}, function (err, payload) {
 		callback(err, payload ? payload.options : null);
 	});
 };
 
-plugin.build = function(data, callback) {
+plugin.build = function (data, callback) {
 	var req = data.req;
 	var res = data.res;
 	var next = data.next;
@@ -96,7 +140,7 @@ plugin.build = function(data, callback) {
 			} catch (e) {
 				return helpers.redirect(res, '/');
 			}
-			return helpers.redirect(res, '/' + (a.path || '').replace(/^\/*/, '') );
+			return helpers.redirect(res, '/' + (a.path || '').replace(/^\/*/, ''));
 		} else {
 			res.render('', {});
 			return;
@@ -109,14 +153,14 @@ plugin.build = function(data, callback) {
 
 	async.parallel({
 		isMain: async.apply(posts.isMain, req.query.pid),
-		postData: function(next) {
+		postData: function (next) {
 			if (!req.query.pid && !req.query.toPid) {
 				return next();
 			}
 
 			posts.getPostData(req.query.pid || req.query.toPid, next);
 		},
-		topicData: function(next) {
+		topicData: function (next) {
 			if (req.query.tid) {
 				topics.getTopicData(req.query.tid, next);
 			} else if (req.query.pid) {
@@ -126,7 +170,7 @@ plugin.build = function(data, callback) {
 			}
 		},
 		isAdmin: async.apply(user.isAdministrator, uid),
-		isMod: function(next) {
+		isMod: function (next) {
 			if (!uid) {
 				next(null, false);
 			} else if (req.query.cid) {
@@ -143,7 +187,7 @@ plugin.build = function(data, callback) {
 			}
 		},
 		formatting: async.apply(plugin.getFormattingOptions),
-		tagWhitelist: function(next) {
+		tagWhitelist: function (next) {
 			getTagWhitelist(req.query, next);
 		},
 		privileges: function (next) {
@@ -156,7 +200,7 @@ plugin.build = function(data, callback) {
 				next(null, true);
 			}
 		}
-	}, function(err, data) {
+	}, function (err, data) {
 		if (err) {
 			return callback(err);
 		}
@@ -189,8 +233,8 @@ plugin.build = function(data, callback) {
 
 		// Quoted reply
 		if (req.query.toPid && parseInt(req.query.quoted, 10) === 1 && data.postData) {
-			user.getUserField(data.postData.uid, 'username', function(err, username) {
-				translator.translate('[[modules:composer.user_said, ' + username + ']]', function(translated) {
+			user.getUserField(data.postData.uid, 'username', function (err, username) {
+				translator.translate('[[modules:composer.user_said, ' + username + ']]', function (translated) {
 					body = '> ' + (data.postData ? data.postData.content.replace(/\n/g, '\n> ') + '\n\n' : '');
 					body = translated + '\n' + body;
 					ready();

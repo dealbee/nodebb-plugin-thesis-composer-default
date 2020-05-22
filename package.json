@@ -1,26 +1,28 @@
 {
-  "_from": "nodebb-plugin-thesis-composer-default@6.3.23",
+  "_from": "nodebb-plugin-thesis-composer-default",
   "_id": "nodebb-plugin-thesis-composer-default@6.3.23",
   "_inBundle": false,
-  "_integrity": "sha512-XkNSH7qIalxCoh30+UlnWd54fYl4DZwSlJ9w7yYv+z39vrD9RGwxMD169R/6wjVUG+SEu8A7OlJva6g4HNkCBQ==",
+  "_integrity": "sha512-BWXQXzWFjg0dFExoje3Ad03J/i+0z9qsKkWKjA72TZDuED1148z+V6qxgYl4vBIETWi69fYvJVytIuvrBHaRLw==",
   "_location": "/nodebb-plugin-thesis-composer-default",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "tag",
     "registry": true,
-    "raw": "nodebb-plugin-thesis-composer-default@6.3.23",
+    "raw": "nodebb-plugin-thesis-composer-default",
     "name": "nodebb-plugin-thesis-composer-default",
     "escapedName": "nodebb-plugin-thesis-composer-default",
-    "rawSpec": "6.3.23",
+    "rawSpec": "",
     "saveSpec": null,
-    "fetchSpec": "6.3.23"
+    "fetchSpec": "latest"
   },
   "_requiredBy": [
+    "#USER",
     "/"
   ],
-  "_shasum": "6ea5f3cde7fecd751d195581a3621eb529d51fe2",
-  "_spec": "nodebb-plugin-composer-default@6.3.23",
-  "_where": "D:\\ĐẠI HỌC\\NĂM 4\\HK2\\NodeBB\\nodebb\\NodeBB",
+  "_resolved": "https://registry.npmjs.org/nodebb-plugin-thesis-composer-default/-/nodebb-plugin-thesis-composer-default-6.3.23.tgz",
+  "_shasum": "a903ec4d13161128f2e85a68c286ecd2cee64dbf",
+  "_spec": "nodebb-plugin-thesis-composer-default",
+  "_where": "D:\\ĐẠI HỌC\\NĂM 4\\HK2\\NodeBB\\nodebb_group\\NodeBB",
   "author": {
     "name": "NodeBB Team",
     "email": "sales@nodebb.org"
@@ -50,7 +52,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dealbee/nodebb-plugin-thesis-composer-default"
+    "url": "git+https://github.com/dealbee/nodebb-plugin-thesis-composer-default.git"
   },
-  "version": "6.3.23"
+  "version": "6.3.24"
 }
