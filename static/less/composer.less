@@ -10,7 +10,7 @@
 
 .composer {
 	.no-select;
-
+	overflow-y: scroll;
 	z-index: @zindex-modal;
 
 	background: #fff;
@@ -145,11 +145,14 @@
 			top: 1px;
 		}
 	}
-
+	#optional-form, #thumbForm{
+		padding-left: 15px;
+		padding-right: 15px;
+	}
 	.write-preview-container {
 		//flex: 2;
 		display: flex;
-		overflow: hidden;
+		// overflow: hidden;
 	}
 
 	.write-container, .preview-container {

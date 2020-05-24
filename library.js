@@ -69,6 +69,7 @@ plugin.onComposerPush = function (hookData, callback) {
 			delete topicData._id;
 			delete topicData._key;
 			hookData.optionalData = topicData;
+			console.log(hookData.optionalData)
 			next(null, null)
 		}
 	], function (err, res) {

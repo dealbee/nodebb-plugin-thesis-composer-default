@@ -78,8 +78,8 @@ define('composer/uploads', [
 	uploads.toggleThumbEls = function(postContainer, url) {
 		var thumbToggleBtnEl = postContainer.find('.topic-thumb-toggle-btn');
 
-		postContainer.find('input#topic-thumb-url').val(url);
-		postContainer.find('img.topic-thumb-preview').attr('src', url);
+		// postContainer.find('input#topic-thumb-url').val(url);
+		// postContainer.find('img.topic-thumb-preview').attr('src', url);
 		if (url) {
 			postContainer.find('.topic-thumb-clear-btn').removeClass('hide');
 		}

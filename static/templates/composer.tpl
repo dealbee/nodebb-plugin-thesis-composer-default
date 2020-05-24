@@ -79,115 +79,6 @@
                     </li>
                     <!-- ENDIF privileges.upload:post:file -->
                     <!--<![endif]-->
-
-                    <!-- IF allowTopicsThumbnail -->
-                    <li tabindex="-1">
-                        <i class="fa fa-th-large topic-thumb-btn topic-thumb-toggle-btn hide" title="[[topic:composer.thumb_title]]"></i>
-                    </li>
-                    <li tabindex="-1">
-                        <i class="fa fa-plus-circle" title="Optional fields" data-toggle="modal" data-target="#optional"></i>
-                    </li>
-                    <div class="topic-thumb-container center-block hide">
-                        <div>
-                            <form id="thumbForm" method="post" class="topic-thumb-form" enctype="multipart/form-data">
-                                <img class="topic-thumb-preview"></img>
-                                <div class="form-group">
-                                    <label for="topic-thumb-url">[[topic:composer.thumb_url_label]]</label>
-                                    <input type="text" id="topic-thumb-url" class="form-control" placeholder="[[topic:composer.thumb_url_placeholder]]" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="topic-thumb-file">[[topic:composer.thumb_file_label]]</label>
-                                    <input type="file" id="topic-thumb-file" class="form-control" />
-                                </div>
-                                <div class="form-group topic-thumb-ctrl">
-                                    <i class="fa fa-spinner fa-spin hide topic-thumb-spinner" title="[[topic:composer.uploading]]"></i>
-                                    <i class="fa fa-times topic-thumb-btn hide topic-thumb-clear-btn" title="[[topic:composer.thumb_remove]]"></i>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div id="optional" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Optional Fields</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form>
-                                        <div class="row">
-                                            <div class="form-group col-md-6">
-                                                <label for="price-input">Price</label>
-                                                <input value="{optionalData.price}" type="text" class="form-control" id="price-input" placeholder="0.00">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="currency-input">Currency</label>
-                                                <input value="{optionalData.currency}" type="text" class="form-control" id="currency-input" placeholder="Currency">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-md-6">
-                                                <label for="brand-input">Brand</label>
-                                                <input value="{optionalData.brand}" type="text" class="form-control" id="brand-input" placeholder="Type brand">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="discount-percentage-input">Discount Percentage</label>
-                                                <input value="{optionalData.discountPercentage}" type="text" class="form-control" id="discount-percentage-input" placeholder="0.0">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-md-6">
-                                                <label for="discount-money-input">Discount Money</label>
-                                                <input value="{optionalData.discountMoney}" type="text" class="form-control" id="discount-money-input" placeholder="0.00">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="max-discount-money-input">Max Discount Money</label>
-                                                <input value="{optionalData.maxDiscount}" type="text" class="form-control" id="max-discount-money-input" placeholder="0.00">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-md-6">
-                                                <label for="amount-input">Amount</label>
-                                                <input type="text" class="form-control" id="amount-input" placeholder="Enter amount" value="{optionalData.amount}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="min-order-input">Min Order</label>
-                                                <input value="{optionalData.minOrder}" type="text" class="form-control" id="min-order-input" placeholder="0">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-md-6">
-                                                <label for="url-input">Deal URL</label>
-                                                <input type="text" class="form-control" id="url-input" placeholder="https://example.com" value="{optionalData.dealUrl}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="expired-date-input">Expired at</label>
-                                                <input value="{optionalData.expiredDate}" type="text" class="form-control" id="expired-date-input" placeholder="DD-MM-YYYY">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-md-6">
-                                                <label for="sku-input">SKU</label>
-                                                <input type="text" class="form-control" id="sku-input" placeholder="sku" value="{optionalData.sku}">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="coupon-input">Coupon</label>
-                                                <input value="{optionalData.coupon}" type="text" class="form-control" id="coupon-input" placeholder="Coupon">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Minimize</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- ENDIF allowTopicsThumbnail -->
-
                     <form id="fileForm" method="post" enctype="multipart/form-data">
                         <!--[if gte IE 9]><!-->
                         <input type="file" id="files" name="files[]" multiple class="gte-ie9 hide" />
@@ -199,7 +90,86 @@
                 </ul>
             </div>
         </div>
-
+        <div class="row">
+            <!-- IF allowTopicsThumbnail -->
+            <form id="thumbForm" method="post" class="topic-thumb-form" enctype="multipart/form-data">
+                <img class="topic-thumb-preview" src="{optionalData.thumb}"></img>
+                <div class="form-group">
+                    <label for="topic-thumb-url">[[topic:composer.thumb_url_label]]</label>
+                    <input type="text" id="topic-thumb-url" class="form-control" placeholder="[[topic:composer.thumb_url_placeholder]]" value="{optionalData.thumb}" />
+                </div>
+                <div class="form-group">
+                    <label for="topic-thumb-file">[[topic:composer.thumb_file_label]]</label>
+                    <input type="file" id="topic-thumb-file" class="form-control" />
+                </div>
+                <div class="form-group topic-thumb-ctrl">
+                    <i class="fa fa-spinner fa-spin hide topic-thumb-spinner" title="[[topic:composer.uploading]]"></i>
+                </div>
+            </form>
+            <form id="optional-form">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="price-input">Price</label>
+                        <input value="{optionalData.price}" type="text" class="form-control" id="price-input" placeholder="0.00">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="currency-input">Currency</label>
+                        <input value="{optionalData.currency}" type="text" class="form-control" id="currency-input" placeholder="Currency">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="brand-input">Brand</label>
+                        <input value="{optionalData.brand}" type="text" class="form-control" id="brand-input" placeholder="Type brand">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="discount-percentage-input">Discount Percentage</label>
+                        <input value="{optionalData.discountPercentage}" type="text" class="form-control" id="discount-percentage-input" placeholder="0.0">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="discount-money-input">Discount Money</label>
+                        <input value="{optionalData.discountMoney}" type="text" class="form-control" id="discount-money-input" placeholder="0.00">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="max-discount-money-input">Max Discount Money</label>
+                        <input value="{optionalData.maxDiscount}" type="text" class="form-control" id="max-discount-money-input" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="amount-input">Amount</label>
+                        <input type="text" class="form-control" id="amount-input" placeholder="Enter amount" value="{optionalData.amount}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="min-order-input">Min Order</label>
+                        <input value="{optionalData.minOrder}" type="text" class="form-control" id="min-order-input" placeholder="0">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="url-input">Deal URL</label>
+                        <input type="text" class="form-control" id="url-input" placeholder="https://example.com" value="{optionalData.dealUrl}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="expired-date-input">Expired at</label>
+                        <input value="{optionalData.expiredDate}" type="text" class="form-control" id="expired-date-input" placeholder="DD-MM-YYYY">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="sku-input">SKU</label>
+                        <input type="text" class="form-control" id="sku-input" placeholder="sku" value="{optionalData.sku}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="coupon-input">Coupon</label>
+                        <input value="{optionalData.coupon}" type="text" class="form-control" id="coupon-input" placeholder="Coupon">
+                    </div>
+                </div>
+            </form>
+            <!-- ENDIF allowTopicsThumbnail -->
+        </div>
         <div class="row write-preview-container">
             <div class="write-container">
                 <div class="help-text">
