@@ -3,6 +3,11 @@
         <div class="col-xs-12 col-md-8">
             <div class="col-xs-6 pull-left optional-data-col">
                 <div class="col-md-12 pull-left optional-data-label" id="price-sale-url-container">
+                    <!-- IF discountMoney -->
+                    <div class="pull-left mr-1" id="discount-money-container">
+                        {discountMoney} {currency}
+                    </div>
+                    <!-- ENDIF discountMoney -->
                     <!-- IF price -->
                     <div class="pull-left mr-1" id="price-container">
                         {price} {currency}
@@ -26,11 +31,6 @@
         <div class="col-xs-12 col-md-8">
             <div class="col-md-12 pull-left optional-data-col">
                 <div class="col-md-12 optional-data-label" id="discount-container">
-                    <!-- IF discountMoney -->
-                    <div class="pull-left mr-1">
-                        Discount: {discountMoney} {currency}
-                    </div>
-                    <!-- ENDIF discountMoney -->
                     <!-- IF maxDiscount -->
                     <div class="pull-left mr-1">
                         Maxdiscount: {maxDiscount} {currency}

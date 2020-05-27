@@ -39,7 +39,8 @@
 	"less": [
 		"./static/less/composer.less",
 		"./static/less/thesis-composer.less",
-		"./static/less/optionalDataContainer.less"
+		"./static/less/optionalDataContainer.less",
+		"./static/less/optionalData.less"
 	],
 	"scripts": [
 		"./static/lib/client.js",

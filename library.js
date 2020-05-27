@@ -27,13 +27,21 @@ plugin.init = function (data, callback) {
 
 	data.router.get('/admin/plugins/thesis-composer-default', data.middleware.admin.buildHeader, controllers.renderAdminPage);
 	data.router.get('/api/admin/plugins/thesis-composer-default', controllers.renderAdminPage);
-	data.router.post('/composer/optional-data', async function(req, res){
-		if (!req.loggedIn){
-			return res.status(400).send({message:"No have permisson"})
+	data.router.post('/composer/optional-data', async function (req, res) {
+		if (!req.loggedIn) {
+			return res.status(400).send({ message: "No have permisson" })
 		}
 		var topicData = await db.client.collection('objects').find({ _key: "topic:" + req.body.tid }).toArray();
-		topicData[0].currency=topicData[0].currency.split(" ")[0];
-		data.app.render('optionalDataContainer',topicData[0],function(err,html){
+		if (topicData[0].currency)
+			topicData[0].currency = topicData[0].currency.split(" ")[0];
+
+		if (topicData[0].price)
+			topicData[0].price = parseFloat(topicData[0].price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		if (topicData[0].discountMoney)
+			topicData[0].discountMoney = parseFloat(topicData[0].discountMoney).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		if (topicData[0].maxDiscount)
+			topicData[0].maxDiscount = parseFloat(topicData[0].maxDiscount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		data.app.render('optionalData', topicData[0], function (err, html) {
 			return res.status(200).send(html);
 		})
 	});
@@ -64,12 +72,12 @@ plugin.onComposerPush = function (hookData, callback) {
 	async.waterfall([
 		async function (next) {
 			var tid = await posts.getPostField(hookData.pid, 'tid')
-			var topicData = await db.client.collection('objects').find({ _key: "topic:"+tid}).toArray();
-			topicData=topicData[0];
+			var topicData = await db.client.collection('objects').find({ _key: "topic:" + tid }).toArray();
+			topicData = topicData[0];
 			delete topicData._id;
 			delete topicData._key;
 			hookData.optionalData = topicData;
-			console.log(hookData.optionalData)
+			// console.log(hookData.optionalData)
 			next(null, null)
 		}
 	], function (err, res) {

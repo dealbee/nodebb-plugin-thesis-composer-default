@@ -635,8 +635,7 @@ define('composer', [
 				return composerAlert(post_uuid, 'Invaid currency');
 			}
 		}
-		console.log(expiredDate)
-		console.log(moment(expiredDate, 'DD-MM-YYYY', true).format())
+		// console.log(moment(expiredDate, 'DD-MM-YYYY', true).format())
 		if (expiredDate)
 			if (moment(expiredDate, 'DD-MM-YYYY', true).format() === "Invalid date") {
 				return composerAlert(post_uuid, 'Invaid date');

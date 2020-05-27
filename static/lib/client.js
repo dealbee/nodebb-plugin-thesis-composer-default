@@ -63,7 +63,7 @@ $(document).ready(function() {
 		});
 		$(window).resize(function(){
 			if (!localStorage.getItem('composer:previewToggled')){
-				console.log('change');
+				// console.log('change');
 				$('.write-preview-container .preview-container').height($('.composer-container').height()-90);
 			}
 		})
