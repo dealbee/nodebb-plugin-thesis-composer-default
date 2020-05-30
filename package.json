@@ -54,5 +54,5 @@
     "type": "git",
     "url": "git+https://github.com/dealbee/nodebb-plugin-thesis-composer-default.git"
   },
-  "version": "6.3.25"
+  "version": "6.4.25"
 }

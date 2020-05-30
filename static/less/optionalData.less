@@ -1,55 +1,62 @@
-#optinal-data-container{
-    font-size: 14px;
-    color: gray;
-    margin-bottom: 15px;
-    .row:first-child{
-        display: flex;
-        align-items: center;
+#optinal-data-container {
+  font-size: 14px;
+  color: gray;
+  margin-bottom: 15px;
+  .row:first-child {
+    display: flex;
+    align-items: center;
+  }
+  #discount-container,
+  #price-container,
+  #discount-percentage-container {
+    font-size: 30px;
+  }
+  #discount-container,
+  #discount-percentage-container {
+    font-weight: bold;
+  }
+  #price-container {
+    text-decoration: line-through;
+    font-size: 20px;
+  }
+  #discount-percentage-container {
+    display: inline-block;
+    color: white;
+    background-color: #337ab7;
+    padding: 3px 7px;
+  }
+  .divider {
+    border-bottom: solid 0.5px lightgray;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 60%;
+  }
+  .vertical-divider {
+    margin: 0px 10px;
+    height: 20px;
+  }
+  span span {
+    color: #337ab7;
+    font-weight: 600;
+  }
+  #url-container {
+    font-size: 30px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    a {
+      font-weight: bold;
     }
-    #discount-container, #price-container, #discount-percentage-container{
-        font-size: 30px;
-    }
-    #discount-container, #discount-percentage-container{
-        font-weight: bold;
-    }
-    #price-container{
-        text-decoration: line-through;
-        font-size: 20px;
-    }
-    #discount-percentage-container{
-        display: inline-block;
-        color: white;
-        background-color: #337ab7;
-        padding: 3px 7px;
-    }
-    .divider{
-        border-bottom: solid 0.5px lightgray;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        width: 60%;
-    }
-    .vertical-divider{
-        margin: 0px 10px;
-        height: 20px;
-    }
-    span span{
-        color: #337ab7;
-        font-weight: 600;
-    }
-    #url-container{
-        font-size: 30px;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
+  }
 }
-.mr-1{
-    margin-right: 10px;
+.mr-1 {
+  margin-right: 10px;
 }
 .ui-front {
   z-index: 2147483647 !important;
 }
-@media(max-width: 1200px){
-    #optinal-data-container .divider{
-        width: 100%;
-    }
+@media (max-width: 1200px) {
+  #optinal-data-container .divider {
+    width: 100%;
+  }
 }

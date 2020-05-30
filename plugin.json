@@ -2,6 +2,8 @@
 	"id": "nodebb-plugin-thesis-composer-default",
 	"url": "https://github.com/lamcuongdat/nodebb-plugin-thesis-composer-default",
 	"library": "library.js",
+	"languages": "languages",
+	"defaultLang": "en-GB",
 	"hooks": [
 		{
 			"hook": "static:app.load",

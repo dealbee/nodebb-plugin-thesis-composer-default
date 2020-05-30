@@ -90,6 +90,24 @@
                 </ul>
             </div>
         </div>
+        <div class="row write-preview-container">
+            <div class="write-container">
+                <div class="help-text">
+                    <span class="help hidden">[[modules:composer.compose]] <i class="fa fa-question-circle"></i></span>
+                    <span class="toggle-preview hide">[[modules:composer.show_preview]]</span>
+                </div>
+                <div class="pull-right draft-icon hidden-md hidden-lg"></div>
+                <textarea class="write" tabindex="4" rows="5"></textarea>
+            </div>
+        </div>
+        <div class="row write-preview-container">
+            <div class="hidden-sm hidden-xs preview-container">
+                <div class="help-text">
+                    <span class="toggle-preview">[[modules:composer.hide_preview]]</span>
+                </div>
+                <div class="preview well"></div>
+            </div>
+        </div>
         <div class="row">
             <!-- IF allowTopicsThumbnail -->
             <form id="thumbForm" method="post" class="topic-thumb-form" enctype="multipart/form-data">
@@ -109,84 +127,66 @@
             <form id="optional-form">
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="price-input">Price</label>
-                        <input value="{optionalData.price}" type="text" class="form-control" id="price-input" placeholder="0.00">
+                        <label for="price-input">[[thesiscomposer:price]]</label>
+                        <input value="{optionalData.price}" type="text" class="form-control" id="price-input" placeholder="[[thesiscomposer:price-placeholder]]">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="currency-input">Currency</label>
-                        <input value="{optionalData.currency}" type="text" class="form-control" id="currency-input" placeholder="Currency">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="brand-input">Brand</label>
-                        <input value="{optionalData.brand}" type="text" class="form-control" id="brand-input" placeholder="Type brand">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="discount-percentage-input">Discount Percentage</label>
-                        <input value="{optionalData.discountPercentage}" type="text" class="form-control" id="discount-percentage-input" placeholder="0.0">
+                        <label for="currency-input">[[thesiscomposer:currency]]</label>
+                        <input value="{optionalData.currency}" type="text" class="form-control" id="currency-input" placeholder="[[thesiscomposer:currency-placeholder]]">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="discount-money-input">Discount Money</label>
-                        <input value="{optionalData.discountMoney}" type="text" class="form-control" id="discount-money-input" placeholder="0.00">
+                        <label for="brand-input">[[thesiscomposer:brand]]</label>
+                        <input value="{optionalData.brand}" type="text" class="form-control" id="brand-input" placeholder="brand-placeholder">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="max-discount-money-input">Max Discount Money</label>
-                        <input value="{optionalData.maxDiscount}" type="text" class="form-control" id="max-discount-money-input" placeholder="0.00">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="amount-input">Amount</label>
-                        <input type="text" class="form-control" id="amount-input" placeholder="Enter amount" value="{optionalData.amount}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="min-order-input">Min Order</label>
-                        <input value="{optionalData.minOrder}" type="text" class="form-control" id="min-order-input" placeholder="0">
+                        <label for="discount-percentage-input">[[thesiscomposer:discount-percentage]]</label>
+                        <input value="{optionalData.discountPercentage}" type="text" class="form-control" id="discount-percentage-input" placeholder="[[thesiscomposer:discount-percentage-placeholder]]">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="url-input">Deal URL</label>
-                        <input type="text" class="form-control" id="url-input" placeholder="https://example.com" value="{optionalData.dealUrl}">
+                        <label for="discount-money-input">[[thesiscomposer:discount-money]]</label>
+                        <input value="{optionalData.discountMoney}" type="text" class="form-control" id="discount-money-input" placeholder="[[thesiscomposer:discount-money-placeholder]]">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="expired-date-input">Expired at</label>
-                        <input value="{optionalData.expiredDate}" type="text" class="form-control" id="expired-date-input" placeholder="DD-MM-YYYY">
+                        <label for="max-discount-money-input">[[thesiscomposer:max-discount-money]]</label>
+                        <input value="{optionalData.maxDiscount}" type="text" class="form-control" id="max-discount-money-input" placeholder="[[thesiscomposer:max-discount-money-placeholder]]">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="sku-input">SKU</label>
-                        <input type="text" class="form-control" id="sku-input" placeholder="sku" value="{optionalData.sku}">
+                        <label for="amount-input">[[thesiscomposer:amount]]</label>
+                        <input type="text" class="form-control" id="amount-input" placeholder="[[thesiscomposer:amount-placeholder]]" value="{optionalData.amount}">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="coupon-input">Coupon</label>
-                        <input value="{optionalData.coupon}" type="text" class="form-control" id="coupon-input" placeholder="Coupon">
+                        <label for="min-order-input">[[thesiscomposer:min-order]]</label>
+                        <input value="{optionalData.minOrder}" type="text" class="form-control" id="min-order-input" placeholder="[[thesiscomposer:min-order-placeholder]]">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="url-input">[[thesiscomposer:deal-url]]</label>
+                        <input type="text" class="form-control" id="url-input" placeholder="[[thesiscomposer:deal-url-placeholder]]" value="{optionalData.dealUrl}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="expired-date-input">[[thesiscomposer:expired-date]]</label>
+                        <input value="{optionalData.expiredDate}" type="text" class="form-control" id="expired-date-input" placeholder="[[thesiscomposer:expired-date-placeholder]]">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="sku-input">[[thesiscomposer:sku]]</label>
+                        <input type="text" class="form-control" id="sku-input" placeholder="[[thesiscomposer:sku-placeholder]]" value="{optionalData.sku}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="coupon-input">[[thesiscomposer:coupon]]</label>
+                        <input value="{optionalData.coupon}" type="text" class="form-control" id="coupon-input" placeholder="[[thesiscomposer:coupon-placeholder]]">
                     </div>
                 </div>
             </form>
             <!-- ENDIF allowTopicsThumbnail -->
-        </div>
-        <div class="row write-preview-container">
-            <div class="write-container">
-                <div class="help-text">
-                    <span class="help hidden">[[modules:composer.compose]] <i class="fa fa-question-circle"></i></span>
-                    <span class="toggle-preview hide">[[modules:composer.show_preview]]</span>
-                </div>
-                <div class="pull-right draft-icon hidden-md hidden-lg"></div>
-                <textarea class="write" tabindex="4" rows="5"></textarea>
-            </div>
-        </div>
-        <div class="row write-preview-container">
-            <div class="hidden-sm hidden-xs preview-container">
-                <div class="help-text">
-                    <span class="toggle-preview">[[modules:composer.hide_preview]]</span>
-                </div>
-                <div class="preview well"></div>
-            </div>
         </div>
         <!-- IF isTopicOrMain -->
         <div class="tag-row">

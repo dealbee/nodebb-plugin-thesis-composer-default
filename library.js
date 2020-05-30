@@ -16,6 +16,7 @@ var db = require.main.require('./src/database');
 var async = module.parent.require('async');
 var nconf = module.parent.require('nconf');
 var validator = require('validator');
+var translator = require.main.require('./public/src/modules/translator');
 
 var plugin = module.exports;
 
@@ -42,7 +43,9 @@ plugin.init = function (data, callback) {
 		if (topicData[0].maxDiscount)
 			topicData[0].maxDiscount = parseFloat(topicData[0].maxDiscount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		data.app.render('optionalData', topicData[0], function (err, html) {
-			return res.status(200).send(html);
+			translator.translate(html, function (translated) {
+				return res.status(200).send(translated);
+			});
 		})
 	});
 
