@@ -38,8 +38,8 @@ plugin.init = function (data, callback) {
 
 		if (topicData[0].price)
 			topicData[0].price = parseFloat(topicData[0].price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		if (topicData[0].discountMoney)
-			topicData[0].discountMoney = parseFloat(topicData[0].discountMoney).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		if (topicData[0].discountPrice)
+			topicData[0].discountPrice = parseFloat(topicData[0].discountPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		if (topicData[0].maxDiscount)
 			topicData[0].maxDiscount = parseFloat(topicData[0].maxDiscount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		data.app.render('optionalData', topicData[0], function (err, html) {

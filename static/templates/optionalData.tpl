@@ -6,11 +6,11 @@
                 {price} {currency}
             </div>
             <!-- ENDIF price -->
-            <!-- IF discountMoney -->
+            <!-- IF discountPrice -->
             <span id="discount-container">
-                {discountMoney} {currency}
+                {discountPrice} {currency}
             </span>
-            <!-- ENDIF discountMoney -->
+            <!-- ENDIF discountPrice -->
         </span>
         <!-- IF discountPercentage -->
         <span id="discount-percentage-container" class="mr-1">
@@ -56,7 +56,7 @@
     <div class="row">
         <!-- IF expiredDate -->
         <span id="expired-date-container">
-            [[thesiscomposer:end-at]]: <span>{expiredDate}</span>
+            [[thesiscomposer:end-at]]: <span>{expiredTime} {expiredDate}</span>
         </span>
         <span class="vertical-divider"></span>
         <!-- ENDIF expiredDate -->

@@ -9,6 +9,7 @@
     "min-order":"Minimum order",
     "deal-url":"Deal URL",
     "expired-date":"Expired date",
+    "expired-time":"Expired time",
     "sku":"SKU",
     "coupon":"Coupon code",
     "price-placeholder":"0.00",
@@ -21,6 +22,7 @@
     "min-order-placeholder":"0",
     "deal-url-placeholder":"https://link-to-deal.com",
     "expired-date-placeholder":"DD-MM-YYYY",
+    "expired-time-placeholder":"00:00 AM",
     "sku-placeholder":"Type stock keeping unit string",
     "coupon-placeholder":" ",
 

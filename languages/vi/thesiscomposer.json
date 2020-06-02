@@ -8,7 +8,8 @@
     "amount":"Số lượng",
     "min-order":"Số sản phẩm cần đặt tối thiểu",
     "deal-url":"Đường dẫn",
-    "expired-date":"Ngày hết hạn",
+    "expired-date":"Hết hạn ngày",
+    "expired-time":"Vào lúc",
     "sku":"SKU-Mã hàng hóa",
     "coupon":"Mã giảm giá",
     "price-placeholder":"0.00",
@@ -21,6 +22,7 @@
     "min-order-placeholder":"0",
     "deal-url-placeholder":"https://đường-dẫn-đến-deal.com",
     "expired-date-placeholder":"ngày-tháng-năm",
+    "expired-time-placeholder":"00:00 AM",
     "sku-placeholder":"Nhập mã hàng hóa",
     "coupon-placeholder":"Nhập mã giảm giá",
 
