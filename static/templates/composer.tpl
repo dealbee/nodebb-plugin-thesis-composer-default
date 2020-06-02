@@ -254,3 +254,20 @@
         }
     });
 </script>
+<script>
+    changeFunc = function(){
+        var dp = $('#discount-money-input').val()
+        var p =$('#price-input').val();
+        dp =parseFloat(dp);
+        p = parseFloat(p);
+        var dpe = ((p-dp)/p*100).toFixed(0);
+        if (dpe >=0){
+            $('#discount-percentage-input').val(dpe.toString())
+        }
+        else{
+            $('#discount-percentage-input').val(null)
+        }
+    }
+    $('#discount-money-input').change(changeFunc);
+    $('#price-input').change(changeFunc)
+</script>

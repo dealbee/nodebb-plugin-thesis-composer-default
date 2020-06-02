@@ -668,8 +668,13 @@ define('composer', [
 			}
 		if (discountPrice)
 			if (!parseFloat(discountPrice)) {
-				return composerAlert(post_uuid, 'Discount money must be a number');
+				return composerAlert(post_uuid, 'Discount price must be a number');
 			}
+		if (price && discountPrice) {
+			if(price < discountPrice){
+				return composerAlert(post_uuid, 'Discount price is larger than price');
+			}
+		}
 		if (discountPercentage)
 			if (!parseFloat(discountPercentage) || parseFloat(discountPercentage) > 100 || parseFloat(discountPercentage) < 0) {
 				return composerAlert(post_uuid, 'Discount percentage must be a number and less than 100');

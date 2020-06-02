@@ -17,6 +17,17 @@ require(['moment'], function (moment) {
         var expiredDate = $('#expired-date-input').val();
         var expiredTime = $('#expired-time-input').val();
         var expiredAt = null;
+        var discountMoney = null;
+        if(discountPrice && price && !discountPercentage){
+            var dP =parseFloat(discountPrice);
+            var p = parseFloat(price);
+            discountPercentage = (p-dP)/p *100;
+            discountPercentage = discountPercentage.toFixed(0).toString();
+        }
+        if(discountPrice && price){
+            discountMoney = parseFloat(price) - parseFloat(discountPrice);
+            discountMoney = discountMoney.toString();
+        }
         if (expiredDate) {
             var strExpiredAt;
             if (!expiredTime) {
@@ -28,7 +39,7 @@ require(['moment'], function (moment) {
             }
             expiredAt = moment(strExpiredAt, "DD/mm/YYYY H:mm A").valueOf();
         }
-        var optionalData = { sku, dealUrl, brand, price, amount, discountPrice, discountPercentage, coupon, maxDiscount, minOrder, currency, expiredDate, expiredTime, expiredAt }
+        var optionalData = { sku, dealUrl, brand, price, amount, discountPrice, discountPercentage, coupon, maxDiscount, minOrder, currency, expiredDate, expiredTime, expiredAt,discountMoney }
         if (data.action === 'topics.post' || data.action === 'posts.edit') {
             data.composerData.optionalData = optionalData;
         }
