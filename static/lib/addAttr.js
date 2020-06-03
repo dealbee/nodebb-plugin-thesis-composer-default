@@ -31,8 +31,8 @@ require(['moment'], function (moment) {
         if (expiredDate) {
             var strExpiredAt;
             if (!expiredTime) {
-                expiredTime = "00:00 AM"
-                strExpiredAt = `${expiredDate} 00:00 AM`
+                expiredTime = "12:59 PM"
+                strExpiredAt = `${expiredDate} 12:59 PM`
             }
             else if (moment(expiredTime, 'hh:mm A', true).format() != "Invalid date") {
                 strExpiredAt = `${expiredDate} ${expiredTime}`

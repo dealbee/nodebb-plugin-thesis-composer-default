@@ -652,8 +652,8 @@ define('composer', [
 					}
 				}
 				else {
-					expiredTime = "00:00 AM"
-					strExpiredAt = `${expiredDate} 00:00 AM`
+					expiredTime = "12:59 PM"
+					strExpiredAt = `${expiredDate} 12:59 PM`
 				}
 			}
 			expiredAt = moment(strExpiredAt, "DD/mm/YYYY H:mm A").valueOf();
