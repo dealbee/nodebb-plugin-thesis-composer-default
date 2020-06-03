@@ -37,7 +37,7 @@ require(['moment'], function (moment) {
             else if (moment(expiredTime, 'hh:mm A', true).format() != "Invalid date") {
                 strExpiredAt = `${expiredDate} ${expiredTime}`
             }
-            expiredAt = moment(strExpiredAt, "DD/mm/YYYY H:mm A").valueOf();
+            expiredAt = moment(strExpiredAt, "DD-MM-YYYY hh:mm A").unix();
         }
         var optionalData = { sku, dealUrl, brand, price, amount, discountPrice, discountPercentage, coupon, maxDiscount, minOrder, currency, expiredDate, expiredTime, expiredAt,discountMoney }
         if (data.action === 'topics.post' || data.action === 'posts.edit') {

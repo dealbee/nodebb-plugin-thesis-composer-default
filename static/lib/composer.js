@@ -658,6 +658,9 @@ define('composer', [
 			}
 			expiredAt = moment(strExpiredAt, "DD/mm/YYYY H:mm A").valueOf();
 		}
+		else if (!expiredDate && expiredTime){
+			return composerAlert(post_uuid, 'Expired date and expired time should be both filled or left empty');
+		}
 		if (price)
 			if (!parseFloat(price)) {
 				return composerAlert(post_uuid, 'The price of product must be a number');
