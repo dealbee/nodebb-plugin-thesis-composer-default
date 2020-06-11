@@ -22,7 +22,7 @@ require(['moment'], function (moment) {
             var dP =parseFloat(discountPrice);
             var p = parseFloat(price);
             discountPercentage = (p-dP)/p *100;
-            discountPercentage = discountPercentage.toFixed(0).toString();
+            discountPercentage = Math.round(discountPercentage*100)/100;
         }
         if(discountPrice && price){
             discountMoney = parseFloat(price) - parseFloat(discountPrice);
@@ -39,7 +39,22 @@ require(['moment'], function (moment) {
             }
             expiredAt = moment(strExpiredAt, "DD-MM-YYYY hh:mm A").valueOf();
         }
-        var optionalData = { sku, dealUrl, brand, price, amount, discountPrice, discountPercentage, coupon, maxDiscount, minOrder, currency, expiredDate, expiredTime, expiredAt,discountMoney }
+        var optionalData = {
+            sku,
+            dealUrl,
+            brand,
+            price: parseFloat(price),
+            amount:parseInt(amount),
+            discountPrice: parseFloat(discountPrice),
+            discountPercentage: parseFloat(discountPercentage),
+            coupon,
+            maxDiscount: parseFloat(discountPercentage),
+            minOrder: parseInt(minOrder),
+            currency,
+            expiredDate,
+            expiredTime,
+            expiredAt,
+            discountMoney: parseFloat(discountMoney) }
         if (data.action === 'topics.post' || data.action === 'posts.edit') {
             data.composerData.optionalData = optionalData;
         }
