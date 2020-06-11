@@ -674,7 +674,7 @@ define('composer', [
 				return composerAlert(post_uuid, 'Discount price must be a number');
 			}
 		if (price && discountPrice) {
-			if(price < discountPrice){
+			if(parseFloat(price) < parseFloat(discountPrice)){
 				return composerAlert(post_uuid, 'Discount price is larger than price');
 			}
 		}
