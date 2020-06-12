@@ -17,7 +17,7 @@ var async = module.parent.require('async');
 var nconf = module.parent.require('nconf');
 var validator = require('validator');
 var translator = require.main.require('./public/src/modules/translator');
-
+var moment = require('./static/lib/moment')
 var plugin = module.exports;
 
 plugin.socketMethods = socketMethods;
@@ -42,6 +42,10 @@ plugin.init = function (data, callback) {
 			topicData[0].discountPrice = parseFloat(topicData[0].discountPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		if (topicData[0].maxDiscount)
 			topicData[0].maxDiscount = parseFloat(topicData[0].maxDiscount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		if(topicData[0].expiredAt){
+			topicData[0].expiredTime = moment(topicData[0].expiredAt).format('hh:mm A');
+			topicData[0].expiredDate = moment(topicData[0].expiredAt).format('DD-MM-YYYY');
+		}
 		data.app.render('optionalData', topicData[0], function (err, html) {
 			translator.translate(html, function (translated) {
 				return res.status(200).send(translated);

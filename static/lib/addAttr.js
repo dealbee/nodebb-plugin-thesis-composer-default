@@ -48,7 +48,7 @@ require(['moment'], function (moment) {
             discountPrice: parseFloat(discountPrice),
             discountPercentage: parseFloat(discountPercentage),
             coupon,
-            maxDiscount: parseFloat(discountPercentage),
+            maxDiscount: parseFloat(maxDiscount),
             minOrder: parseInt(minOrder),
             currency,
             expiredDate,
