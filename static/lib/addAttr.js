@@ -64,7 +64,6 @@ $(window).on('filter:composer.create', function (ev, data) {
     data.createData.optionalData = data.postData.optionalData
 });
 $(window).on('action:ajaxify.end', function (event, data) {
-    // console.log(data)
     if (data.tpl_url == 'topic') {
         $.post(config.relative_path + '/composer/optional-data', { tid: $('[data-tid]').data("tid") }).done(function (res) {
             $(res).insertAfter('[component="post/header"]')

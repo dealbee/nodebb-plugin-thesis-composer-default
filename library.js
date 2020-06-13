@@ -29,13 +29,12 @@ plugin.init = function (data, callback) {
 	data.router.get('/admin/plugins/thesis-composer-default', data.middleware.admin.buildHeader, controllers.renderAdminPage);
 	data.router.get('/api/admin/plugins/thesis-composer-default', controllers.renderAdminPage);
 	data.router.post('/composer/optional-data', async function (req, res) {
-		if (!req.loggedIn) {
-			return res.status(400).send({ message: "No have permisson" })
-		}
+		// if (!req.loggedIn) {
+		// 	return res.status(400).send({ message: "No have permisson" })
+		// }
 		var topicData = await db.client.collection('objects').find({ _key: "topic:" + req.body.tid }).toArray();
 		if (topicData[0].currency)
 			topicData[0].currency = topicData[0].currency.split(" ")[0];
-
 		if (topicData[0].price)
 			topicData[0].price = parseFloat(topicData[0].price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		if (topicData[0].discountPrice)
