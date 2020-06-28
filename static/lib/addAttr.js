@@ -3,24 +3,28 @@ $(document).ready(function () {
 
 require(['moment'], function (moment) {
     $(window).on('action:composer.submit', function (ev, data) {
-        var sku = $('#sku-input').val();
-        var dealUrl = $('#url-input').val();
-        var brand = $('#brand-input').val();
-        var price = $('#price-input').val();
-        var amount = $('#amount-input').val();
-        var discountPrice = $('#discount-money-input').val();
-        var discountPercentage = $('#discount-percentage-input').val();
-        var coupon = $('#coupon-input').val();
-        var maxDiscount = $('#max-discount-money-input').val();
-        var minOrder = $('#min-order-input').val();
-        var currency = $('#currency-input').val();
-        var expiredDate = $('#expired-date-input').val();
-        var expiredTime = $('#expired-time-input').val();
-        var expiredAt = null;
-        var discountMoney = null;
+        let sku = $('#sku-input').val();
+        let dealUrl = $('#url-input').val();
+        let brand = $('#brand-input').val();
+        let price = $('#price-input').val();
+        let amount = $('#amount-input').val();
+        let discountPrice = $('#discount-money-input').val();
+        let discountPercentage = $('#discount-percentage-input').val();
+        let coupon = $('#coupon-input').val();
+        let maxDiscount = $('#max-discount-money-input').val();
+        let minOrder = $('#min-order-input').val();
+        let currency = $('#currency-input').val();
+        let expiredDate = $('#expired-date-input').val();
+        let expiredTime = $('#expired-time-input').val();
+        let expiredAt = null;
+        let discountMoney = null;
+        let images = [];
+        $('#deleteImagesContainer .img-container').not('.chosen').each(function(idx, el){
+            images.push($(this).find('img').attr('src'));
+        });
         if(discountPrice && price && !discountPercentage){
-            var dP =parseFloat(discountPrice);
-            var p = parseFloat(price);
+            let dP =parseFloat(discountPrice);
+            let p = parseFloat(price);
             discountPercentage = (p-dP)/p *100;
             discountPercentage = Math.round(discountPercentage*100)/100;
         }
@@ -29,7 +33,7 @@ require(['moment'], function (moment) {
             discountMoney = discountMoney.toString();
         }
         if (expiredDate) {
-            var strExpiredAt;
+            let strExpiredAt;
             if (!expiredTime) {
                 expiredTime = "12:59 PM"
                 strExpiredAt = `${expiredDate} 12:59 PM`
@@ -39,7 +43,7 @@ require(['moment'], function (moment) {
             }
             expiredAt = moment(strExpiredAt, "DD-MM-YYYY hh:mm A").valueOf();
         }
-        var optionalData = {
+        let optionalData = {
             sku,
             dealUrl,
             brand,
@@ -54,6 +58,7 @@ require(['moment'], function (moment) {
             expiredDate,
             expiredTime,
             expiredAt,
+            images,
             discountMoney: parseFloat(discountMoney) }
         if (data.action === 'topics.post' || data.action === 'posts.edit') {
             data.composerData.optionalData = optionalData;
@@ -63,22 +68,22 @@ require(['moment'], function (moment) {
 $(window).on('filter:composer.create', function (ev, data) {
     data.createData.optionalData = data.postData.optionalData
 });
-$(window).on('action:ajaxify.end', function (event, data) {
-    if (data.tpl_url == 'topic') {
-        $.post(config.relative_path + '/composer/optional-data', { tid: $('[data-tid]').data("tid") }).done(function (res) {
-            $(res).insertAfter('[component="post/header"]')
-            var divider = $('.row.divider')
-            if ($(divider.get(0)).next().children().length == 0) {
-                // console.log("0empty")
-                $(divider.get(0)).addClass('hidden')
-            }
-            if ($(divider.get(1)).next().children().length == 0) {
-                // console.log("1empty")
-                $(divider.get(1)).addClass('hidden')
-            }
-        })
-    }
-})
+// $(window).on('action:ajaxify.end', function (event, data) {
+//     if (data.tpl_url == 'topic') {
+//         $.post(config.relative_path + '/composer/optional-data', { tid: $('[data-tid]').data("tid") }).done(function (res) {
+//             $(res).insertAfter('[component="post/header"]')
+//             let divider = $('.row.divider')
+//             if ($(divider.get(0)).next().children().length == 0) {
+//                 // console.log("0empty")
+//                 $(divider.get(0)).addClass('hidden')
+//             }
+//             if ($(divider.get(1)).next().children().length == 0) {
+//                 // console.log("1empty")
+//                 $(divider.get(1)).addClass('hidden')
+//             }
+//         })
+//     }
+// })
 $(window).on('action:composer.posts.edit', function (event, data) {
     // console.log("Edit")
     location.reload(true);

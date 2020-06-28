@@ -1,0 +1,32 @@
+#openDeleteModalBtn{
+  position: absolute;
+  right: 15px;
+  z-index: 2;
+}
+#deleteImagesContainer.row{
+  max-height: 300px;
+  margin-left: 0px;
+  margin-bottom: 15px;
+  overflow-y: scroll;
+}
+#deleteImagesContainer.row > div {
+  padding: 3px;
+}
+
+#deleteImagesContainer .img-container {
+  height: 109.6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px #eeeeee;
+  padding: 5px;
+}
+
+#deleteImagesContainer .img-container.chosen {
+  background-color: #428bca;
+}
+
+#deleteImagesContainer .img-container img {
+  object-fit: scale-down;
+  max-height: 100%;
+}

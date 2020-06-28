@@ -12,6 +12,7 @@
     "expired-time":"Expired time",
     "sku":"SKU",
     "coupon":"Coupon code",
+    "delete-images": "Choose images to delete",
     "price-placeholder":"0.00",
     "currency-placeholder":"Type currency",
     "brand-placeholder":" ",

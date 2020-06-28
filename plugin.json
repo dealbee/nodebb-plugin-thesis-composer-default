@@ -43,12 +43,14 @@
 		"./static/less/thesis-composer.less",
 		"./static/less/optionalDataContainer.less",
 		"./static/less/optionalData.less",
+		"./static/less/deleteImages.less",
 		"./static/less/jquery.timepicker.less"
 	],
 	"scripts": [
 		"./static/lib/client.js",
 		"./node_modules/screenfull/dist/screenfull.js",
 		"./static/lib/addAttr.js",
+		"./static/lib/deleteImages.js",
 		"./static/lib/jquery.timepicker.js"
 	],
 	"modules": {
