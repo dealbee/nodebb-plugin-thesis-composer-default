@@ -68,22 +68,6 @@ require(['moment'], function (moment) {
 $(window).on('filter:composer.create', function (ev, data) {
     data.createData.optionalData = data.postData.optionalData
 });
-// $(window).on('action:ajaxify.end', function (event, data) {
-//     if (data.tpl_url == 'topic') {
-//         $.post(config.relative_path + '/composer/optional-data', { tid: $('[data-tid]').data("tid") }).done(function (res) {
-//             $(res).insertAfter('[component="post/header"]')
-//             let divider = $('.row.divider')
-//             if ($(divider.get(0)).next().children().length == 0) {
-//                 // console.log("0empty")
-//                 $(divider.get(0)).addClass('hidden')
-//             }
-//             if ($(divider.get(1)).next().children().length == 0) {
-//                 // console.log("1empty")
-//                 $(divider.get(1)).addClass('hidden')
-//             }
-//         })
-//     }
-// })
 $(window).on('action:composer.posts.edit', function (event, data) {
     // console.log("Edit")
     location.reload(true);

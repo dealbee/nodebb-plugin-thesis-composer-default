@@ -1,25 +1,26 @@
 "use strict";
 
-var plugins = require.main.require('./src/plugins');
-var topics = require.main.require('./src/topics');
-var categories = require.main.require('./src/categories');
-var posts = require.main.require('./src/posts');
-var user = require.main.require('./src/user');
-var meta = require.main.require('./src/meta');
-var privileges = require.main.require('./src/privileges');
-var translator = require.main.require('./src/translator');
-var helpers = require.main.require('./src/controllers/helpers');
-var SocketPlugins = require.main.require('./src/socket.io/plugins');
-var socketMethods = require('./websockets');
-var url = require('url');
-var db = require.main.require('./src/database');
-var async = module.parent.require('async');
-var nconf = module.parent.require('nconf');
-var validator = require('validator');
-var translator = require.main.require('./public/src/modules/translator');
-var moment = require('./static/lib/moment')
-var plugin = module.exports;
-
+const plugins = require.main.require('./src/plugins');
+const topics = require.main.require('./src/topics');
+const categories = require.main.require('./src/categories');
+const posts = require.main.require('./src/posts');
+const user = require.main.require('./src/user');
+const meta = require.main.require('./src/meta');
+const privileges = require.main.require('./src/privileges');
+const helpers = require.main.require('./src/controllers/helpers');
+const SocketPlugins = require.main.require('./src/socket.io/plugins');
+const socketMethods = require('./websockets');
+const url = require('url');
+const db = require.main.require('./src/database');
+const async = module.parent.require('async');
+const nconf = module.parent.require('nconf');
+const validator = require('validator');
+const translator = require.main.require('./public/src/modules/translator');
+const moment = require('./static/lib/moment')
+const plugin = module.exports;
+const privilegeNames = {
+	canTakeNote: 'editor:event:canTakeNote'
+};
 plugin.socketMethods = socketMethods;
 
 plugin.init = function (data, callback) {
@@ -54,6 +55,18 @@ plugin.init = function (data, callback) {
 
 	callback();
 };
+plugin.privilegesList = function (list, callback) {
+	callback(null, [...list, ...Object.values(privilegeNames)]);
+}
+plugin.privilegesGroupsList = function (list, callback) {
+	callback(null, [...list, ...Object.values(privilegeNames).map(name => `groups:${name}`)]);
+}
+
+plugin.privilegesListHuman = function (list, callback) {
+	callback(null, [...list, {
+		name: 'Can take note'
+	}]);
+}
 plugin.addMoreAttr = function (data, callback) {
 	var newData = {
 		...data.topic,
@@ -310,6 +323,7 @@ plugin.build = function (data, callback) {
 	});
 };
 
+module.exports = plugin;
 function getTagWhitelist(query, callback) {
 	async.waterfall([
 		function (next) {
