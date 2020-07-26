@@ -380,13 +380,13 @@ define('composer', [
 			composer.minimize(post_uuid);
 		});
 		postContainer.find('.write-container span.toggle-preview').on('click', function (e) {
-			$('.write-preview-container .preview.well').parent().addClass('hide');
+			$('.write-preview-container .preview-container').parent().addClass('hide');
 			$('.write-preview-container .write-container').parent().removeClass('hide');
-			var previewHeight = $('.write-preview-container .write-container').height();
-			$('.write-preview-container .preview.well').parent().removeClass('hide');
+			// var previewHeight = $('.write-preview-container .write-container').height();
+			$('.write-preview-container .preview-container').parent().removeClass('hide');
 			$('.write-preview-container .write-container').parent().addClass('hide');
 			preview.render(postContainer);
-			$('.write-preview-container .preview.well').parent().height(previewHeight);
+			// $('.write-preview-container .preview.well').parent().height(previewHeight);
 		})
 		bodyEl.on('input propertychange', function () {
 			preview.render(postContainer);

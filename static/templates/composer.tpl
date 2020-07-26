@@ -90,7 +90,7 @@
                 </ul>
             </div>
         </div>
-        <div class="row write-preview-container">
+        <div class="row write-preview-container" style="min-height: 300px">
             <div class="write-container">
                 <div class="help-text">
                     <span class="help hidden">[[modules:composer.compose]] <i class="fa fa-question-circle"></i></span>
@@ -100,8 +100,8 @@
                 <textarea class="write" tabindex="4" rows="5"></textarea>
             </div>
         </div>
-        <div class="row write-preview-container">
-            <div class="hidden-sm hidden-xs preview-container">
+        <div class="row write-preview-container" style="min-height: 300px">
+            <div class="preview-container">
                 <div class="help-text">
                     <span class="toggle-preview">[[modules:composer.hide_preview]]</span>
                 </div>

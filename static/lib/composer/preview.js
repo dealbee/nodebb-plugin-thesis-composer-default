@@ -86,7 +86,6 @@ define('composer/preview', function() {
 				showBtn.toggleClass('hide', true);
 				previewContainer.toggleClass('hidden-xs hidden-sm', !show);
 				writeContainer.toggleClass('hidden-xs hidden-sm', show);
-
 				// Render preview once on mobile
 				if (show) {
 					preview.render(postContainer, function () {});
