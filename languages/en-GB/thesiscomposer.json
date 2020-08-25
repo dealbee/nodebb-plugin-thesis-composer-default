@@ -31,5 +31,6 @@
     "end-at":"End at",
     "sku-display":"SKU",
     "coupon-display":"Coupon",
-    "min-order-display":"Minimum order"
+    "min-order-display":"Minimum order",
+    "can-take-note": "Take note"
 }

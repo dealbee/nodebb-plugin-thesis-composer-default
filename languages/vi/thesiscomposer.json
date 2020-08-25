@@ -31,5 +31,6 @@
     "end-at":"Kết thúc vào",
     "sku-display":"SKU",
     "coupon-display":"Mã giảm giá",
-    "min-order-display":"Số sản phẩm tối thiểu cần đặt"
+    "min-order-display":"Số sản phẩm tối thiểu cần đặt",
+    "can-take-note": "Thêm ghi chú"
 }

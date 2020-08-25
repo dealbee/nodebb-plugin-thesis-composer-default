@@ -64,7 +64,7 @@ plugin.privilegesGroupsList = function (list, callback) {
 
 plugin.privilegesListHuman = function (list, callback) {
 	callback(null, [...list, {
-		name: 'Can take note'
+		name: '[[thesiscomposer:can-take-note]]'
 	}]);
 }
 plugin.addMoreAttr = function (data, callback) {
